@@ -15,10 +15,20 @@ SELECT *
 FROM employees
 WHERE hire_date LIKE '%199%';
 
+#Alternative way.
+SELECT *
+FROM employees
+WHERE YEAR(hire_date) Between 1990 AND 1999;
+
 #Find all employees born on Christmas
 SELECT *
 FROM employees
 WHERE birth_date LIKE '%12-25';
+
+#alternative
+SELECT *
+FROM employees
+WHERE MONTH(birth_date) = 12 AND DAY(birth_date) = 25;
 
 #Find all employees with a 'q' in their last name
 SELECT *
