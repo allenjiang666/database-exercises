@@ -27,7 +27,7 @@ JOIN dept_manager AS dm
 ON dm.emp_no = e.emp_no # Key has same left right order as the table.
 JOIN departments AS d 
 ON d.dept_no = dm.dept_no
-WHERE dm.to_date = '9999-01-01';#current employee
+WHERE dm.to_date = '9999-01-01';#current employee dm.to_date > NOW()
 
 #Find the name of all departments currently managed by women.
 SELECT 
@@ -50,7 +50,7 @@ JOIN employees_with_departments AS ewd
 ON ewd.emp_no = t.emp_no
 JOIN departments AS d
 ON d.dept_name = ewd.dept_name
-WHERE t.to_date = '9999-01-01' AND d.dept_no = 'd009' # Alternative way d.dept_name = "Customer Service"
+WHERE t.to_date = '9999-01-01' AND d.dept_no = 'd009' AND # Alternative way d.dept_name = "Customer Service"
 GROUP BY Title;
 
 #Find the current salary of all current managers.
@@ -120,3 +120,44 @@ ON s.emp_no = e.emp_no
 WHERE dm.to_date = '9999-01-01' AND s.to_date = '9999-01-01'
 ORDER BY s.salary DESC
 LIMIT 1;
+
+
+#Bonus Find the names of all current employees, their department name, and their current manager name.
+SELECT
+	CONCAT(e.first_name, " ", e.last_name) AS "Employee_Name",
+	d.dept_name,
+	CONCAT(e1.first_name, " ", e1.last_name) AS "Manager_Name"
+	
+FROM dept_emp AS de
+JOIN departments AS d
+ON d.dept_no = de.dept_no
+JOIN employees AS e
+ON e.emp_no = de.emp_no
+JOIN dept_manager AS dm
+ON dm.dept_no = de.dept_no
+JOIN employees AS e1
+ON e1.emp_no = dm.emp_no
+WHERE de.to_date = '9999-01-01' AND dm.to_date = '9999-01-01';
+
+#Bonus Find the highest paid employee in each department.
+#Bonus Find the highest paid employee in each department.
+SELECT 
+	CONCAT(e1.first_name, " ", e1.last_name) AS "Employee_Name",
+	dept_name,
+	a.salary
+FROM(
+SELECT 
+	de.dept_no,
+	d.dept_name,
+	MAX(salary) AS 'salary'
+FROM dept_emp AS de
+JOIN salaries AS s
+ON de.emp_no = s.emp_no
+JOIN departments AS d
+ON d.dept_no = de.dept_no
+WHERE s.to_date = '9999-01-01' 
+GROUP BY dept_no) AS a
+JOIN salaries AS s1
+ON s1.salary = a.salary
+JOIN employees AS e1
+ON e1.emp_no = s1.emp_no;
