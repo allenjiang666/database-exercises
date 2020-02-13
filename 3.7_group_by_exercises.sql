@@ -33,8 +33,15 @@ FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
 GROUP BY gender;
 
-
-
+#Recall the query the generated usernames for the employees from the last lesson. Are there any duplicate usernames?
+#Bonus: how many duplicate usernames are
+SELECT SUM(duplicated)
+FROM 
+(SELECT
+	CONCAT(LOWER(LEFT(first_name, 1)),LOWER(LEFT(last_name, 4)), '_', 		SUBSTR(birth_date,6,2), RIGHT(YEAR(birth_date),2)) AS username,
+	COUNT(*) > 1 AS duplicated
+	FROM employees
+	GROUP BY username) AS d_u;
 
 
 
