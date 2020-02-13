@@ -160,4 +160,5 @@ GROUP BY dept_no) AS a
 JOIN salaries AS s1
 ON s1.salary = a.salary
 JOIN employees AS e1
-ON e1.emp_no = s1.emp_no;
+ON e1.emp_no = s1.emp_no
+WHERE s1.to_date = '9999-01-01';
