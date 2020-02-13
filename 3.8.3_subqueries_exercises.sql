@@ -7,7 +7,7 @@ WHERE hire_date IN
 	WHERE emp_no = 101010);
 
 #Find all the titles held by all employees with the first name Aamod
-SELECT title
+SELECT title # SELECT DISTINCT title
 FROM titles 
 WHERE emp_no IN 
 	(SELECT emp_no
@@ -18,11 +18,22 @@ GROUP BY title;
 #How many people in the employees table are no longer working for the company?
 SELECT COUNT(emp_no) AS `Number of employee no longer working`
 FROM employees 
-WHERE emp_no IN 
+WHERE emp_no NOT IN # NOT !!!!
 	(SELECT emp_no
 	FROM dept_emp
-	WHERE to_date < CURDATE());
-
+	WHERE to_date > CURDATE());
+	
+#to_date > CURDATE() is wrong
+	
+#Alternative way 
+SELECT (
+	SELECT COUNT(*)
+	FROM employees 
+) - (
+	SELECT COUNT(*)
+	FROM salaries
+	WHERE to_date > CURDATE()
+);
 #Find all the current department managers that are female.
 SELECT first_name, last_name
 FROM employees 
