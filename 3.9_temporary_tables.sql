@@ -49,18 +49,20 @@ DROP TABLE payment_from_sakila;
 
 SELECT * FROM salary;
 
-C#Find out how the average pay in each department compares to the overall average pay. In order to make the comparison easier, you should use the Z-score for salaries. In terms of salary, what is the best department to work for? The worst?
+#Find out how the average pay in each department compares to the overall average pay. In order to make the comparison easier, you should use the Z-score for salaries. In terms of salary, what is the best department to work for? The worst?
 DROP TABLE salary;
 SELECT * FROM salary;
 
 CREATE TEMPORARY TABLE salary AS
-	SELECT d.dept_name, AVG(salary) AS "avg_salary"
-	FROM employees.salaries s
-	JOIN employees.dept_emp de ON s.emp_no = de.emp_no
-	JOIN employees.departments d ON d.dept_no = de.dept_no
-	WHERE s.to_date > NOW()
-	GROUP BY d.dept_no
-	;
+	CREATE TEMPORARY TABLE salary AS
+ 	SELECT d.dept_name, AVG(salary) AS "avg_salary"
+ 	FROM employees.salaries s
+ 	JOIN employees.dept_emp de ON s.emp_no = de.emp_no
+ 	JOIN employees.departments d ON d.dept_no = de.dept_no
+ 	WHERE s.to_date > NOW() AND de.to_date > NOW()
+ 	GROUP BY d.dept_no
+ 	;
+
 
 SELECT dept_name, 
 	(avg_salary - (
