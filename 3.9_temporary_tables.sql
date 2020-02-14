@@ -4,10 +4,6 @@
 
 
 
-
-
-
-
 CREATE TEMPORARY TABLE employees_with_departments AS
 	SELECT emp_no, first_name, last_name, dept_no, dept_name
 	FROM employees.employees
@@ -80,3 +76,8 @@ SELECT dept_name,
 FROM salary;
 
 
+
+
+
+
+#USe Temporary table when you need to update some data into data by yourself. use subqurey when you dont update any new information in the data.
