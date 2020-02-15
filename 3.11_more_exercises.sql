@@ -199,3 +199,14 @@ FROM store s
 JOIN address a USING(address_id)
 JOIN city c USING(city_id)
 JOIN country co USING(country_id);
+
+#19. LIST the top five genres IN gross revenue IN descending order. (Hint: you may need TO USE the following TABLES: category, film_category, inventory, payment, AND rental.)
+SELECT c.name, SUM(amount) AS gross_income
+FROM payment p
+JOIN rental r USING(rental_id)
+JOIN inventory i USING(inventory_id)
+JOIN film f USING(film_id) 
+JOIN film_category fc USING(film_id)
+JOIN category c USING(category_id)
+GROUP BY category_id 
+ORDER BY gross_income DESC;
