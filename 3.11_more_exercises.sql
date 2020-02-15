@@ -186,3 +186,9 @@ WHERE category_id =
 		)
 )
 ;
+
+#17.Write a query to display how much business, in dollars, each store brought in.
+SELECT store_id, staff_id, SUM(amount) AS total_payment
+FROM payment p
+JOIN store s ON s.manager_staff_id = p.staff_id
+GROUP BY staff_id;
