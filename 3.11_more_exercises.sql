@@ -192,3 +192,10 @@ SELECT store_id, staff_id, SUM(amount) AS total_payment
 FROM payment p
 JOIN store s ON s.manager_staff_id = p.staff_id
 GROUP BY staff_id;
+
+#18.WRITE a QUERY TO display FOR EACH store its store ID, city, AND country.
+SELECT store_id, city, country
+FROM store s
+JOIN address a USING(address_id)
+JOIN city c USING(city_id)
+JOIN country co USING(country_id);
