@@ -210,3 +210,20 @@ JOIN film_category fc USING(film_id)
 JOIN category c USING(category_id)
 GROUP BY category_id 
 ORDER BY gross_income DESC;
+
+USE sakila;
+#1. SELECT statements
+#a.SELECT ALL COLUMNS FROM the actor table.
+SELECT * FROM actor;
+#b.SELECT only the last_name COLUMN FROM the actor table.
+SELECT last_name FROM actor;
+#3.SELECT only the following COLUMNS FROM the film table
+
+
+#2.DISTINCT operator
+#a.SELECT ALL DISTINCT (different) LAST NAMES FROM the actor table.
+SELECT DISTINCT last_name FROM actor;
+#b.SELECT ALL DISTINCT (different) postal codes FROM the address table.
+SELECT DISTINCT postal_code FROM address;
+#c.SELECT ALL DISTINCT (different) ratings FROM the film table.
+SELECT DISTINCT rating FROM film;
