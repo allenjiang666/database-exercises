@@ -291,3 +291,14 @@ WHERE DATE(payment_date) IN ('2005-05-25', '2005-05-27', '2005-05-29');#date val
 SELECT * 
 FROM film
 WHERE rating IN ("G", "PG-13", "NC-17");
+
+#5.BETWEEN operator
+#a.Select all columns from the payment table for payments made between midnight 05/25/2005 and 1 second before midnight 05/26/2005.
+SELECT *
+FROM payment
+WHERE payment_date BETWEEN "2005-05-25 00:00:00" AND "2005-05-25 23:59:59";
+
+#b.Select the following columns from the film table for films where the length of the description is between 100 and 120.
+SELECT rental_duration * rental_rate AS total_rental_cost, LENGTH(description)
+FROM film
+WHERE LENGTH(description) BETWEEN 100 AND 120;
