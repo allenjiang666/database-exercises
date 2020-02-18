@@ -318,3 +318,20 @@ WHERE description LIKE "%Boat";
 SELECT *
 FROM film
 WHERE description LIKE "%Database%" AND length > 180;
+
+#7.LIMIT Operator
+#a.Select all columns from the payment table and only include the first 20 rows.
+SELECT * 
+FROM payment
+LIMIT 20;
+
+#b.Select the payment date and amount columns from the payment table for rows where the payment amount is greater than 5, and only select rows whose zero-based index in the result set is between 1000-2000.
+SELECT payment_date, amount 
+FROM payment
+WHERE amount > 5
+LIMIT 1001 OFFSET 999; # What is zero-base index?
+
+#3.Select all columns from the customer table, limiting results to those where the zero-based index is between 101-200.
+SELECT *
+FROM customer
+LIMIT 100 OFFSET 100;
