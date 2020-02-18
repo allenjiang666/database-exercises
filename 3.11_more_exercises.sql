@@ -227,3 +227,51 @@ SELECT DISTINCT last_name FROM actor;
 SELECT DISTINCT postal_code FROM address;
 #c.SELECT ALL DISTINCT (different) ratings FROM the film table.
 SELECT DISTINCT rating FROM film;
+
+#3. WHERE clause
+#a.SELECT the title, description, rating, movie length COLUMNS FROM the films TABLE that LAST 3 hours OR longer.
+SELECT title, description, rating, length 
+FROM film 
+WHERE length >= 180;
+
+#b.SELECT the payment id, amount, AND payment DATE COLUMNS FROM the payments TABLE FOR payments made ON OR AFTER 05/27/2005.
+SELECT payment_id, amount, payment_date 
+FROM payment 
+WHERE payment_date >= 2005-05-27;
+
+#c.SELECT the PRIMARY KEY, amount, AND payment DATE COLUMNS FROM the payment TABLE FOR payments made ON 05/27/2005.
+SELECT payment_id, amount, payment_date #Cant select Primary key#
+FROM payment
+WHERE payment_date >= 2005-05-27;
+
+#d.SELECT ALL COLUMNS FROM the customer TABLE FOR ROWS that have a LAST NAMES beginning WITH S AND a FIRST NAMES ending WITH N.
+SELECT * 
+FROM customer 
+WHERE last_name LIKE "S%" AND first_name LIKE "%N";
+
+#e.SELECT ALL COLUMNS FROM the customer TABLE FOR ROWS WHERE the customer IS inactive OR has a LAST NAME beginning WITH "M".
+SELECT * 
+FROM customer
+WHERE active = 0 OR last_name LIKE "M%";
+
+#f.SELECT ALL COLUMNS FROM the category TABLE FOR ROWS WHERE the PRIMARY KEY IS greater THAN 4 AND the NAME field begins WITH either C, S OR T.
+SELECT * 
+FROM category 
+WHERE  (category_id > 4) AND (name LIKE "C%") OR (name LIKE "S%") OR (name LIKE "%T");
+
+#g.SELECT ALL COLUMNS minus the PASSWORD COLUMN FROM the staff TABLE FOR ROWS that contain a password.
+CREATE TEMPORARY TABLE staff_t AS
+SELECT * 
+FROM sakila.staff
+WHERE password IS NOT NULL;
+ALTER TABLE staff_t DROP COLUMN password;
+SELECT * FROM curie_956.staff_t;
+
+#h.SELECT ALL COLUMNS minus the PASSWORD COLUMN FROM the staff TABLE FOR ROWS that DO NOT contain a password.
+
+CREATE TEMPORARY TABLE staff_p AS
+SELECT * 
+FROM sakila.staff
+WHERE password IS  NULL;
+ALTER TABLE staff_p DROP COLUMN password;
+SELECT * FROM curie_956.staff_t;
