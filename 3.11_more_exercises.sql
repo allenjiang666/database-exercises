@@ -360,6 +360,93 @@ WHERE special_features LIKE "%Behind the Scenes%" AND length < 120 AND rental_du
 ORDER BY length DESC
 LIMIT 10;
 
+#9.JOINs
+#a.Select customer first_name/last_name and actor first_name/last_name columns from performing a left join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+	#b.Label customer first_name/last_name columns as customer_first_name/		customer_last_name
+	#Label actor first_name/last_name columns in a similar fashion.
+	#returns correct number of records: 599
+SELECT 
+	c.first_name AS customer_first_name ,
+	c.last_name AS customer_last_name, 
+	a.first_name AS actor_first_name, 
+	a.last_name AS actor_last_name
+FROM customer c
+LEFT JOIN actor a
+ON c.last_name = a.last_name;
+	
+	
+#b.Select the customer first_name/last_name and actor first_name/last_name columns from performing a /right join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+	#returns correct number of records: 200
+SELECT 
+	c.first_name AS customer_first_name ,
+	c.last_name AS customer_last_name, 
+	a.first_name AS actor_first_name, 
+	a.last_name AS actor_last_name
+FROM customer c
+RIGHT JOIN actor a
+ON c.last_name = a.last_name; 	
+		
+#c.Select the customer first_name/last_name and actor first_name/last_name columns from performing an inner join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+	#returns correct number of records: 43
+SELECT 
+	c.first_name AS customer_first_name ,
+	c.last_name AS customer_last_name, 
+	a.first_name AS actor_first_name, 
+	a.last_name AS actor_last_name
+FROM customer c
+JOIN actor a
+ON c.last_name = a.last_name;
+	
+	
+#d.Select the city name and country name columns from the city table, performing a left join with the country table to get the country name column.
+	#Returns correct records: 600
+SELECT city, country	
+FROM city ci
+LEFT JOIN country co
+ON ci.country_id = co.country_id;
+
+#e.Select the title, description, release year, and language name columns from the film table, performing a left join with the language table to get the "language" column.
+	#Label the language.name column as "language"
+	#Returns 1000 rows
+SELECT title, description, release_year, l.name AS language 
+FROM film f
+LEFT JOIN language l
+ON f.language_id = l.language_id;	
+	
+	
+	
+#f.Select the first_name, last_name, address, address2, city name, district, and postal code columns from the staff table, performing 2 left joins with the address table then the city table to get the address and city related columns.
+	#returns correct number of rows: 2
+SELECT first_name, last_name, address, address2, city, district, postal_code
+FROM staff s
+LEFT JOIN address a
+	ON a.address_id = s.address_id
+LEFT JOIN city c
+	ON c.city_id = a.city_id;
 
 
+#1.What is the average replacement cost of a film? Does this change depending on the rating of the film?
+SELECT AVG(replacement_cost)
+FROM film;
 
+SELECT rating, AVG(replacement_cost)
+FROM film
+GROUP BY rating;
+
+#2.How many different films of each genre are in the database?
+SELECT c.name, COUNT(*)
+FROM film_category fc
+JOIN category c
+USING (category_id)
+JOIN film f
+USING (film_id)
+GROUP BY c.name;
+
+#3.What are the 5 frequently rented films?
+SELECT f.title, COUNT(*) AS total
+FROM rental r
+JOIN inventory i ON i.inventory_id = r.inventory_id
+JOIN film f ON f.film_id = i.film_id
+GROUP BY f.title
+ORDER BY total DESC
+LIMIT 5;
