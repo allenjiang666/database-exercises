@@ -302,3 +302,19 @@ WHERE payment_date BETWEEN "2005-05-25 00:00:00" AND "2005-05-25 23:59:59";
 SELECT rental_duration * rental_rate AS total_rental_cost, LENGTH(description)
 FROM film
 WHERE LENGTH(description) BETWEEN 100 AND 120;
+
+#6.LIKE operator
+#a.Select the following columns from the film table for rows where the description begins with "A Thoughtful".
+SELECT *
+FROM film
+WHERE description LIKE "A Thoughtfu%";
+
+#b.Select the following columns from the film table for rows where the description ends with the word "Boat".
+SELECT *
+FROM film
+WHERE description LIKE "%Boat";
+
+#c.Select the following columns from the film table where the description contains the word "Database" and the length of the film is greater than 3 hours.
+SELECT *
+FROM film
+WHERE description LIKE "%Database%" AND length > 180;
